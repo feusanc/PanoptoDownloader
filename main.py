@@ -46,38 +46,23 @@ if __name__ == "__main__":
 
     options.add_argument("--ignore-certificate-errors")
 
-    parser = argparse.ArgumentParser(description='Downloads selected videos from panopto.')
-    parser.add_argument('-headless', action="store_false", help='If specified opens up with browser')
-    args = parser.parse_args()
-
-    if args.headless:
-        options.add_argument('headless')
+    # parser = argparse.ArgumentParser(description='Downloads selected videos from panopto.')
+    # parser.add_argument('-headless', action="store_false", help='If specified opens up with browser')
+    # args = parser.parse_args()
 
     driver = webdriver.Chrome(resource_path('./driver/chromedriver.exe'), options=options, desired_capabilities=desired_capabilities)
 
-    # moodle_url = input("Please provide your school's moodle url: ")
-    # print("\n")
-
-    name = input("Username: ")
-    pword = getpass.getpass("Password: ")
-
-    driver.get("moodle.boun.edu.tr")
-    username = driver.find_element(By.NAME, "username")
-    username.clear()
-    username.send_keys(name)
-
-    password = driver.find_element(By.NAME, "password")
-    password.clear()
-    password.send_keys(pword)
-
-    button = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "login-input-submit")))
-    button.click()
-    print("Logging in to moodle...")
+    driver.get("https://www.panopto.com")
 
     while True:
-        mainUrl = input("URL: ")
+        check = input("Please type 'yes' if you have logged in to panopto: ")
+        if check.lower() == 'yes':
+            break
+
+    while True:
+        mainUrl = input("Please input the video URL: ")
         if mainUrl.replace(" ", "") == "":
+            print('\n')
             continue
         driver.get(mainUrl)
 
@@ -89,7 +74,7 @@ if __name__ == "__main__":
 
         time.sleep(.5)
         driver.get(mainUrl)
-        time.sleep(5)
+        time.sleep(3)
 
         logs = driver.get_log("performance")
 
@@ -106,10 +91,6 @@ if __name__ == "__main__":
                     f.write(json.dumps(network_log)+",")
             f.write("{}]")
 
-        # print("Quitting Selenium WebDriver")
-        # driver.quit()
-
-        
         with open(json_file_path, "r", encoding="utf-8") as f:
             logs = json.loads(f.read())
 
@@ -134,7 +115,7 @@ if __name__ == "__main__":
 
         if url_found:
             if not mp4:
-                fileName = input('Output name: ')
+                fileName = input('Output name (Do not put any extension): ')
                 while os.path.exists(f'{fileName}.ts'):
                     print("\n File already exists please enter a new name")
                     fileName = input('Output name: ')
@@ -179,3 +160,5 @@ f"""If it didn't download the right video you can also manually find and downloa
             os.remove("network_log.json")
         else:
             print("json file doesn't exist")
+
+    driver.quit()
