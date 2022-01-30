@@ -13,6 +13,7 @@ import urllib.request
 import getpass
 
 progress_bar = None
+json_file_path = "network_log.json"
 
 def show_progress(block_num, block_size, total_size):
     global progress_bar
@@ -34,6 +35,8 @@ def resource_path(relative_path):
         base_path = os.path.dirname(__file__)
     return os.path.join(base_path, relative_path)
 
+
+
 if __name__ == "__main__":
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
@@ -43,7 +46,7 @@ if __name__ == "__main__":
 
     options.add_argument("--ignore-certificate-errors")
 
-    parser = argparse.ArgumentParser(description='Downloads all videos from a panopto folder.')
+    parser = argparse.ArgumentParser(description='Downloads selected videos from panopto.')
     parser.add_argument('-headless', action="store_false", help='If specified opens up with browser')
     args = parser.parse_args()
 
@@ -90,7 +93,7 @@ if __name__ == "__main__":
 
         logs = driver.get_log("performance")
 
-        with open("network_log.json", "w", encoding="utf-8") as f:
+        with open(json_file_path, "w", encoding="utf-8") as f:
             f.write("[")
 
             for log in logs:
@@ -106,7 +109,7 @@ if __name__ == "__main__":
         # print("Quitting Selenium WebDriver")
         # driver.quit()
 
-        json_file_path = "network_log.json"
+        
         with open(json_file_path, "r", encoding="utf-8") as f:
             logs = json.loads(f.read())
 
@@ -164,7 +167,7 @@ If it didn't download the right video please send me a message together with the
                     print("Please wait...")
                     r=requests.get(url)
 
-                    urllib.request.urlretrieve(url, f"{fileName}{i}.mp4", show_progress)
+                    urllib.request.urlretrieve(url, f"{fileName}.mp4", show_progress)
                     print(
 f"""If it didn't download the right video you can also manually find and download the video you want, from here:
 {mp4s} \n""")
