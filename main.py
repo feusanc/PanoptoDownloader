@@ -40,7 +40,7 @@ def resource_path(relative_path):
 if __name__ == "__main__":
     print(
 """\n
-Please do not close the browser window if you want to be able to keep downloading videos.
+Please do not close the main browser window if you want to be able to keep downloading videos.
 \n""")
 
 
@@ -58,7 +58,7 @@ Please do not close the browser window if you want to be able to keep downloadin
 
     driver = webdriver.Chrome(resource_path('./driver/chromedriver.exe'), options=options, desired_capabilities=desired_capabilities)
 
-    driver.get("https://www.panopto.com")
+    driver.get("http://login.panopto.com/")
 
     while True:
         check = input("Please type 'yes' if you have logged in to panopto: ")
