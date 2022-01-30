@@ -55,13 +55,13 @@ if __name__ == "__main__":
 
     driver = webdriver.Chrome(resource_path('./driver/chromedriver.exe'), options=options, desired_capabilities=desired_capabilities)
 
-    moodle_url = input("Please provide your school's moodle url: ")
-    print("\n")
+    # moodle_url = input("Please provide your school's moodle url: ")
+    # print("\n")
 
     name = input("Username: ")
     pword = getpass.getpass("Password: ")
 
-    driver.get(moodle_url)
+    driver.get("moodle.boun.edu.tr")
     username = driver.find_element(By.NAME, "username")
     username.clear()
     username.send_keys(name)
