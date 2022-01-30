@@ -38,6 +38,12 @@ def resource_path(relative_path):
 
 
 if __name__ == "__main__":
+    print(
+"""\n
+Please do not close the browser window if you want to be able to keep downloading videos.
+\n""")
+
+
     desired_capabilities = DesiredCapabilities.CHROME
     desired_capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
 
