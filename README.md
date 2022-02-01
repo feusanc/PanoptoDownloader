@@ -9,10 +9,7 @@ ChromeDriver 97.0.4692.71 is required, any above version is incompatible.
 
 --How to use--
 
-Type in your school's moodle page like this: www.moodle.boun.edu.tr (For the moment it only works with moodle)
-
-Type in your username and password so the program logs you in, so your session is stored and can easily login to panopto.
-Type in the panopto url of the video you would like to download.
+Log in to panopto from opened web browser and do not close the main tab until all your downloads are finished.
 
 If the video is recorded live then it won't show any progress since it will be downloading every part of it and then combining them. If the video is recorded first and then uploaded to panopto then it is probably in .mp4 format, while downloading it the progress will show. 
 
